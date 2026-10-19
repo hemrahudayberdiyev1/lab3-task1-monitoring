@@ -1,0 +1,9 @@
+(
+echo FROM python:3.11-slim
+echo WORKDIR /app
+echo COPY requirements.txt .
+echo RUN pip install --no-cache-dir -r requirements.txt
+echo COPY app.py .
+echo EXPOSE 8080
+echo CMD ["python", "app.py"]
+) > Dockerfile

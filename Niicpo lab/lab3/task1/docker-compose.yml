@@ -1,0 +1,21 @@
+services:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+      - "4318:4318"
+
+  app:
+    build: .
+    container_name: flask-otel-app
+    ports:
+      - "8080:8080"
+    environment:
+      - OTEL_SERVICE_NAME=dice-server
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    depends_on:
+      - jaeger
